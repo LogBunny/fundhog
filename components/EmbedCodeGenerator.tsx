@@ -32,10 +32,8 @@ const EmbedCodeGenerator = ({ config }: EmbedCodeGeneratorProps) => {
 
     return `<!-- Crypto Coffee Button -->
 <div id="crypto-coffee-button"></div>
-<script>
-  window.cryptoCoffeeConfig = ${configString};
-</script>
-<script src="https://cdn.example.com/crypto-coffee-button.js" async></script>
+<script>window.cryptoCoffeeConfig = ${configString};</script>
+<script src="https://fundhog-page.vercel.app/embed.js"></script>
 <!-- End Crypto Coffee Button -->`;
   };
 
