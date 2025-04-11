@@ -23,7 +23,7 @@ export default function CreatorPage() {
   const { creatorId } = useParams<{ creatorId: string }>();
   const [amount, setAmount] = useState<string>("0");
   const [account, setAccount] = useState<string>("");
-  const [maticAmount, setMaticAmount] = useState<number>(0);
+  const [, setMaticAmount] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 

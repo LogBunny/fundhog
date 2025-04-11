@@ -1,3 +1,4 @@
+
 import { Coffee } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +16,11 @@ interface ButtonPreviewProps {
 }
 
 const ButtonPreview = ({ config, isConnected, onClick }: ButtonPreviewProps) => {
-  // Size classes
+  // Size classes with neobrutalistic styling
   const sizeClasses = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-6 py-3 text-lg",
+    sm: "px-3 py-2 text-sm",
+    md: "px-5 py-3 text-base",
+    lg: "px-8 py-4 text-lg",
   };
 
   // Border radius classes
@@ -35,7 +36,7 @@ const ButtonPreview = ({ config, isConnected, onClick }: ButtonPreviewProps) => 
       onClick={onClick}
       disabled={!isConnected && onClick !== undefined}
       className={cn(
-        "font-medium shadow-sm transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center",
+        "font-black border-4 border-black transition-all duration-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:outline-none focus:ring-0 inline-flex items-center justify-center",
         sizeClasses[config.size as keyof typeof sizeClasses],
         radiusClasses[config.borderRadius as keyof typeof radiusClasses],
         "text-white",
@@ -44,12 +45,9 @@ const ButtonPreview = ({ config, isConnected, onClick }: ButtonPreviewProps) => 
       )}
       style={{ 
         backgroundColor: config.color,
-        borderColor: config.color,
-        // Slightly darker color for focus ring
-        "--tw-ring-color": `${config.color}`,
-      } as React.CSSProperties}
+      }}
     >
-      <Coffee className="mr-2 h-4 w-4" />
+      <Coffee className="mr-2 h-5 w-5" />
       {config.text}
     </button>
   );

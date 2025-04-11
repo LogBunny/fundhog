@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
 import { Copy, Check } from "lucide-react";
 
 interface EmbedCodeGeneratorProps {
@@ -16,7 +15,6 @@ interface EmbedCodeGeneratorProps {
 }
 
 const EmbedCodeGenerator = ({ config }: EmbedCodeGeneratorProps) => {
-  //const { toast } = toast();
   const [copied, setCopied] = useState(false);
 
   const generateEmbedCode = () => {
@@ -40,21 +38,17 @@ const EmbedCodeGenerator = ({ config }: EmbedCodeGeneratorProps) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generateEmbedCode());
     setCopied(true);
-    toast("Copied!", {
-      description: "Embed code copied to clipboard",
-    });
+   
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="space-y-4">
       <p className="text-sm text-gray-500 mb-2">
-        Copy this code and paste it into your website where you want the button
-        to appear.
+        Copy this code and paste it into your website where you want the button to appear.
         {!config.recipientAddress && (
           <span className="block mt-2 text-amber-500">
-            Note: You need to connect your wallet or manually set a recipient
-            address in the code.
+            Note: You need to connect your wallet or manually set a recipient address in the code.
           </span>
         )}
       </p>
