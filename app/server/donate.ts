@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 export async function donateToCreator(
   creatorAddress: string,
   amountInEth: string,
-  description: string
+  //description: string
 ) {
   //const contract = await getContract();
   //const tx = await contract.processDonation(creatorId, {
