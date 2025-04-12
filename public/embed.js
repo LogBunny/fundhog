@@ -29,7 +29,7 @@
   const iframe = document.createElement('iframe');
   iframe.src = `https://fundhog-page.vercel.app/${encodeURIComponent(config.recipientAddress)}`;
   iframe.style.width = '400px';
-  iframe.style.height = '550px';
+  iframe.style.height = '800px';
   iframe.style.border = 'none';
   iframe.style.borderRadius = '12px';
   iframe.style.boxShadow = '0 0 20px rgba(0,0,0,0.2)';

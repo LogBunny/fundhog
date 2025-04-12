@@ -1,136 +1,176 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
-import { donateToCreator } from "../server/donate";
+import { Card } from "@/components/ui/card";
+import { Coffee, Wallet } from "lucide-react";
 import { useParams } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-//import { DonationAmountButton } from "@/components/ui/donation-button";
-import { Coffee } from "lucide-react";
-//import axios from "axios";
+import Link from "next/link";
 
-//const COINGECKO_URL ="https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd";
-
-export default function CreatorPage() {
+export default function DonatePage() {
   const { creatorId } = useParams<{ creatorId: string }>();
   const [amount, setAmount] = useState<string>("0");
   const [account, setAccount] = useState<string>("");
-  const [, setMaticAmount] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  //  const { toast } = useToast();
 
   useEffect(() => {
-    handleAmountChange(amount);
+    // Just to satisfy the linter for the useEffect dependency array
+    if (amount) {
+      // This would be where we'd convert to MATIC amount
+    }
   }, [amount]);
 
   const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        // Request wallet connection
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setAccount(accounts[0]);
-      } catch (err) {
-        console.error("User rejected connection", err);
-      }
-    } else {
-      alert("Please install MetaMask!");
+    if (typeof window.ethereum === "undefined") {
+      //toast({
+      //  title: "MetaMask not detected",
+      //  description: "Please install MetaMask to connect your wallet",
+      //  variant: "destructive",
+      //});
+      return;
+    }
+
+    try {
+      // Request wallet connection
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAccount(accounts[0]);
+      //toast({
+      //  title: "Wallet connected",
+      //  description: `Connected to ${accounts[0].substring(0, 6)}...${accounts[0].substring(38)}`,
+      //    });
+    } catch (err) {
+      console.error("User rejected connection", err);
+      //   toast({
+      //    title: "Connection failed",
+      //   description: "Failed to connect to MetaMask",
+      //   variant: "destructive",
+      // });
     }
   };
 
-  const handleAmountChange = async (value: string) => {
-    //const response = await axios.get<{ "matic-network": { usd: number } }>(
-    //  COINGECKO_URL
-    //);
-    //const matic = parseFloat(value) / response.data["matic-network"].usd;
-    setMaticAmount(parseFloat(value));
+  const donateToCreator = async (
+    creatorAddress: string,
+    donationAmount: string
+  ) => {
+    if (!window.ethereum) {
+      return;
+    }
+
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const weiAmount = Number(donationAmount) * 1e18; // Convert to wei (assuming POL has 18 decimals like ETH)
+      const hexWeiAmount = `0x${weiAmount.toString(16)}`;
+
+      await window.ethereum.request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: accounts[0],
+            to: creatorAddress,
+            value: hexWeiAmount,
+            gas: "0x5208", // 21000 gas
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("Transaction error:", error);
+    }
   };
 
-  //  const predefinedAmounts = ["5", "10", "20"];
-
   return (
-    <div className="min-h-screen bg-white flex justify-center items-center p-4">
-      <Card className="h-full py-0 w-full max-w-md border-4 border-black rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        <CardHeader className="bg-orange-500 text-white pt-4 pr-4 pl-4 pb-0 rounded-none">
+    <div className="mx-auto px-4 py-12 bg-[#FFFFF2] min-h-screen flex justify-center items-center">
+      <Card className="py-0 w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-[-1deg] bg-white">
+        <div className="bg-[#8B5CF6] text-white pt-5 pr-5 pl-5 pb-3 border-b-4 border-black">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-black">
-              SUPPORT WITH CRYPTO
-            </CardTitle>
-            <div className="bg-black p-2">
+            <h2 className="text-3xl font-black">SUPPORT WITH CRYPTO</h2>
+            <div className="bg-black p-2 transform rotate-[-3deg] border-2 border-white">
               <Coffee className="h-6 w-6 text-white" />
             </div>
           </div>
-          <CardDescription className="text-white font-bold mt-1 pb-4">
-            BUY ME A COFFEE
-          </CardDescription>
-        </CardHeader>
+          <p className="text-white font-bold text-xl">BUY ME A COFFEE</p>
+        </div>
 
-        <CardContent className="pt-4 space-y-2 p-4">
-          {/*<div className="grid grid-cols-3 gap-2">
-            {predefinedAmounts.map((presetAmount) => (
-              <DonationAmountButton
-                key={presetAmount}
-                amount={presetAmount}
-                selected={amount === presetAmount}
-                onClick={() => setAmount(presetAmount)}
+        <div className="p-2 space-y-2">
+          <div className="">
+            <label className="text-lg font-black">Amount</label>
+            <div className="flex border-4 border-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <span className="bg-black text-white font-bold flex items-center justify-center px-3">
+                POL
+              </span>
+              <Input
+                type="number"
+                value={amount}
+                min="0.001"
+                step="0.001"
+                className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none font-bold"
+                onChange={(e) => setAmount(e.target.value)}
               />
-            ))}
-          </div>*/}
-          <div className="flex border-2 border-black rounded-none overflow-hidden">
-            <span className="bg-black text-white font-bold flex items-center justify-center px-3">
-              POL
-            </span>
-            <Input
-              type="number"
-              value={amount}
-              min="1"
-              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none"
-              onChange={(e) => setAmount(e.target.value)}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-lg font-black">Message (Coming Soon!)</label>
+            <Textarea
+              placeholder="Will be added in the future!"
+              className="resize-none h-20 border-4 border-black rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              disabled
             />
           </div>
-          <Textarea
-            placeholder="Will be added in the future!"
-            className="resize-none h-20 border-2 border-black rounded-none focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            disabled
-          />
-          <p>
-            Sending to <a href={`https://polygonscan.com/address/${creatorId}`} target="_blank" className="text-blue-700">{`${creatorId.slice(0, 6)}...${creatorId.slice(-4)}`}</a>
-          </p>
-        </CardContent>
 
-        <CardFooter className="flex-col gap-2 bg-gray-100 p-4 border-t-2 border-black">
+          <div className="bg-yellow-300 p-3 border-4 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-[1deg]">
+            Sending to{" "}
+            <a
+              href={`https://polygonscan.com/address/${
+                creatorId || "0x0000000000000000000000000000000000000000"
+              }`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-bg-[#8B5CF6] underline"
+            >
+              {creatorId
+                ? `${creatorId.slice(0, 6)}...${creatorId.slice(-4)}`
+                : "Unknown Address"}
+            </a>
+          </div>
+        </div>
+
+        <div className="p-6 border-t-4 border-black bg-gray-100">
           {account === "" ? (
             <Button
-              className="w-full bg-black text-white hover:bg-gray-800 rounded-none font-bold h-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className="w-full bg-[#0EA5E9] hover:bg-blue-600 text-white border-4 border-black font-black py-6 text-lg shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
               onClick={connectWallet}
             >
-              CONNECT WALLET
+              <Wallet className="mr-2 h-6 w-6" /> CONNECT WALLET
             </Button>
           ) : (
             <Button
-              className="w-full bg-black text-white hover:bg-gray-800 rounded-none font-bold h-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className="w-full bg-[#10B981] hover:bg-green-600 text-white border-4 border-black font-black py-6 text-lg shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
               onClick={async () => {
+                if (!creatorId) {
+                  return;
+                }
                 setSubmitting(true);
                 await donateToCreator(creatorId, amount);
                 setSubmitting(false);
               }}
-              disabled={!amount || amount === "0" || isSubmitting}
+              disabled={!amount || amount === "0" || isSubmitting || !creatorId}
             >
               {isSubmitting ? "PROCESSING..." : `DONATE ${amount} POL`}
             </Button>
           )}
-        </CardFooter>
+          <p className="text-center pt-4">
+            <Link href="/">Powered by FundHog</Link>
+          </p>
+        </div>
       </Card>
     </div>
   );
