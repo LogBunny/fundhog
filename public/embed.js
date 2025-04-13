@@ -73,5 +73,10 @@ const radiusStyles = {
 
   modal.appendChild(iframe);
   document.body.appendChild(modal);
-  document.body.appendChild(btn);
+  const cryptoDiv = document.getElementById("crypto-coffee-button");
+  if(!cryptoDiv){
+    console.log("crypto-coffee-button not found, Please look at the docs!")
+    return;
+  }
+  cryptoDiv.appendChild(btn);
 })();

@@ -3,6 +3,7 @@ import ButtonCustomizer from "@/components/ButtonCustomizer";
 import ButtonPreview from "@/components/ButtonPreview";
 import DonationManager from "@/components/DonationManager";
 import EmbedCodeGenerator from "@/components/EmbedCodeGenerator";
+import FundhogButton from "@/components/FundHogDonationButton";
 import PageHeader from "@/components/PageHeader";
 import {Card} from "@/components/ui/card";
 //import { Toaster } from "@/components/ui/sonner";
@@ -29,8 +30,13 @@ export default function Home() {
 
   return (
     <div className=" bg-[#FFFFF2]">
-      <div className="container mx-auto px-4 py-12 ">
+      <div className="container mx-auto px-4 py-12 ">       
+        <FundhogButton/>
       <PageHeader />
+      <div className="w-[100%] flex flex-row justify-center">
+      <a href="https://www.producthunt.com/posts/fundhog?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-fundhog" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=953008&theme=light&t=1744572015045" alt="FundHog - Accept&#0032;donations&#0032;in&#0032;crypto | Product Hunt" className="width: 250px; height: 54px;" width="250" height="54" /></a>
+      
+      </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12">
         <Card className="self-start p-8 col-span-1 lg:col-span-3 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative bg-white">

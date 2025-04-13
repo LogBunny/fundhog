@@ -137,7 +137,7 @@ export default function DonatePage() {
           <div className="bg-yellow-300 p-3 border-4 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-[1deg]">
             Sending to{" "}
             <a
-              href={`https://ETHygonscan.com/address/${
+              href={`https://etherscan.io/address/${
                 creatorId || "0x0000000000000000000000000000000000000000"
               }`}
               target="_blank"
