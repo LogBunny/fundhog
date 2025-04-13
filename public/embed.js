@@ -1,14 +1,36 @@
+const sizeStyles = {
+  sm: { padding: '8px 12px', fontSize: '14px' },
+  md: { padding: '12px 20px', fontSize: '16px' },
+  lg: { padding: '16px 32px', fontSize: '18px' },
+};
+
+const radiusStyles = {
+  none: '0px',
+  sm: '2px',
+  md: '6px',
+  full: '9999px',
+};
+
 (function () {
   const config = window.cryptoCoffeeConfig;
+  
   // Create the donation button
   const btn = document.createElement('button');
   btn.innerText = config.text;
   
-  btn.style.padding = config.size === 'lg' ? '12px 20px' : '8px 14px';
+  // Apply size styles
+  const size = sizeStyles[config.size] || sizeStyles.md; // Default to md if size is invalid
+  btn.style.padding = size.padding;
+  btn.style.fontSize = size.fontSize;
+  
+  // Apply radius styles
+  const radius = radiusStyles[config.radius] || radiusStyles.md; // Default to md if radius is invalid
+  btn.style.borderRadius = radius;
+  
+  // Apply other styles
   btn.style.background = config.color;
   btn.style.color = '#fff';
-  btn.style.border = 'none';
-  btn.style.borderRadius = '8px';
+  btn.style.border = '4px solid';
   btn.style.cursor = 'pointer';
   btn.style.zIndex = 9999;
 

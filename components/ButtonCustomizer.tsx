@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 //import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {  Wallet } from "lucide-react";
+import { Wallet } from "lucide-react";
 //import { Toaster } from "sonner";
 
 interface ButtonConfig {
@@ -31,7 +31,7 @@ const ButtonCustomizer = ({
   isConnected,
   account,
   setIsConnected,
-  setAccount
+  setAccount,
 }: ButtonCustomizerProps) => {
   //const { toast } = useToast();
   const [connecting, setConnecting] = useState(false);
@@ -47,27 +47,25 @@ const ButtonCustomizer = ({
 
   const connectWallet = async () => {
     if (typeof window.ethereum === "undefined") {
-     
       return;
     }
 
     try {
       setConnecting(true);
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
       if (accounts.length > 0) {
         setAccount(accounts[0]);
         setIsConnected(true);
-        
+
         // Set the connected account as recipient by default if none is set
         if (!config.recipientAddress) {
           onConfigChange({ recipientAddress: accounts[0] });
         }
-        
-        
       }
     } catch (error) {
       console.error(error);
-      
     } finally {
       setConnecting(false);
     }
@@ -76,13 +74,14 @@ const ButtonCustomizer = ({
   const disconnectWallet = () => {
     setAccount("");
     setIsConnected(false);
-    
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="button-text" className="text-lg font-black">Button Text</Label>
+        <Label htmlFor="button-text" className="text-lg font-black">
+          Button Text
+        </Label>
         <Input
           id="button-text"
           value={config.text}
@@ -99,12 +98,16 @@ const ButtonCustomizer = ({
             <div
               key={color.value}
               className={`h-12 border-4 border-black cursor-pointer flex items-center justify-center transform transition-transform ${
-                config.color === color.value ? "translate-x-1 translate-y-1 shadow-none" : "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                config.color === color.value
+                  ? "translate-x-1 translate-y-1 shadow-none"
+                  : "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               }`}
               style={{ backgroundColor: color.value }}
               onClick={() => onConfigChange({ color: color.value })}
             >
-              <span className="text-white text-xs font-black">{color.name}</span>
+              <span className="text-white text-xs font-black">
+                {color.name}
+              </span>
             </div>
           ))}
         </div>
@@ -126,16 +129,34 @@ const ButtonCustomizer = ({
           className="flex space-x-4 mt-2"
         >
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="sm" id="size-sm" className="border-2 border-black" />
-            <Label htmlFor="size-sm" className="font-bold">Small</Label>
+            <RadioGroupItem
+              value="sm"
+              id="size-sm"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="size-sm" className="font-bold">
+              Small
+            </Label>
           </div>
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="md" id="size-md" className="border-2 border-black" />
-            <Label htmlFor="size-md" className="font-bold">Medium</Label>
+            <RadioGroupItem
+              value="md"
+              id="size-md"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="size-md" className="font-bold">
+              Medium
+            </Label>
           </div>
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="lg" id="size-lg" className="border-2 border-black" />
-            <Label htmlFor="size-lg" className="font-bold">Large</Label>
+            <RadioGroupItem
+              value="lg"
+              id="size-lg"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="size-lg" className="font-bold">
+              Large
+            </Label>
           </div>
         </RadioGroup>
       </div>
@@ -148,23 +169,49 @@ const ButtonCustomizer = ({
           className="flex flex-wrap gap-4 mt-2"
         >
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="none" id="radius-none" className="border-2 border-black" />
-            <Label htmlFor="radius-none" className="font-bold">None</Label>
+            <RadioGroupItem
+              value="none"
+              id="radius-none"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="radius-none" className="font-bold">
+              None
+            </Label>
           </div>
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="sm" id="radius-sm" className="border-2 border-black" />
-            <Label htmlFor="radius-sm" className="font-bold">Small</Label>
+            <RadioGroupItem
+              value="sm"
+              id="radius-sm"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="radius-sm" className="font-bold">
+              Small
+            </Label>
           </div>
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="md" id="radius-md" className="border-2 border-black" />
-            <Label htmlFor="radius-md" className="font-bold">Medium</Label>
+            <RadioGroupItem
+              value="md"
+              id="radius-md"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="radius-md" className="font-bold">
+              Medium
+            </Label>
           </div>
           <div className="flex items-center space-x-2 bg-white border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <RadioGroupItem value="full" id="radius-full" className="border-2 border-black" />
-            <Label htmlFor="radius-full" className="font-bold">Full</Label>
+            <RadioGroupItem
+              value="full"
+              id="radius-full"
+              className="border-2 border-black"
+            />
+            <Label htmlFor="radius-full" className="font-bold">
+              Full
+            </Label>
           </div>
         </RadioGroup>
       </div>
+
+     
 
       {/*<div>
         <Label htmlFor="donation-amount" className="text-lg font-black">Default Donation Amount (ETH)</Label>
@@ -185,14 +232,17 @@ const ButtonCustomizer = ({
           onClick={isConnected ? disconnectWallet : connectWallet}
           disabled={connecting}
           className={`w-full text-lg font-black py-6 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 ${
-            isConnected ? "bg-red-500 hover:bg-red-600" : "bg-[#8B5CF6] hover:bg-purple-700"
+            isConnected
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-[#8B5CF6] hover:bg-purple-700"
           }`}
         >
           {connecting ? (
             "Connecting..."
           ) : isConnected ? (
             <>
-              Disconnect Wallet ({account.substring(0, 6)}...{account.substring(38)})
+              Disconnect Wallet ({account.substring(0, 6)}...
+              {account.substring(38)})
             </>
           ) : (
             <>

@@ -1,5 +1,3 @@
-
-import { Coffee } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ButtonPreviewProps {
@@ -36,7 +34,7 @@ const ButtonPreview = ({ config, isConnected, onClick }: ButtonPreviewProps) => 
       onClick={onClick}
       disabled={!isConnected && onClick !== undefined}
       className={cn(
-        "font-black border-4 border-black transition-all duration-200 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:outline-none focus:ring-0 inline-flex items-center justify-center",
+        "font-black border-4 border-black transition-all duration-200 hover:translate-x-1 hover:translate-y-1 focus:outline-none focus:ring-0 inline-flex items-center justify-center",
         sizeClasses[config.size as keyof typeof sizeClasses],
         radiusClasses[config.borderRadius as keyof typeof radiusClasses],
         "text-white",
@@ -47,7 +45,6 @@ const ButtonPreview = ({ config, isConnected, onClick }: ButtonPreviewProps) => 
         backgroundColor: config.color,
       }}
     >
-      <Coffee className="mr-2 h-5 w-5" />
       {config.text}
     </button>
   );
