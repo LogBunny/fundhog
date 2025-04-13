@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Coffee, Wallet } from "lucide-react";
 import { useParams } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 
 export default function DonatePage() {
@@ -79,13 +80,16 @@ export default function DonatePage() {
           },
         ],
       });
+      toast.success('Donation sent successfully');
     } catch (error) {
+      toast.error("Failed sending donation");
       console.error("Transaction error:", error);
     }
   };
 
   return (
     <div className="mx-auto px-4 py-12 bg-[#FFFFF2] min-h-screen flex justify-center items-center">
+      <Toaster position="top-center" reverseOrder={false} />
       <Card className="py-0 w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-[-1deg] bg-white">
         <div className="bg-[#8B5CF6] text-white pt-5 pr-5 pl-5 pb-3 border-b-4 border-black">
           <div className="flex items-center justify-between">
