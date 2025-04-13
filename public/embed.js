@@ -30,7 +30,8 @@ const radiusStyles = {
   // Apply other styles
   btn.style.background = config.color;
   btn.style.color = '#fff';
-  btn.style.border = '4px solid';
+  btn.style.borderStyle = 'solid';
+  btn.style.borderWidth = '4px';
   btn.style.cursor = 'pointer';
   btn.style.zIndex = 9999;
 

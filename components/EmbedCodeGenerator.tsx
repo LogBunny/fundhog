@@ -31,7 +31,7 @@ const EmbedCodeGenerator = ({ config }: EmbedCodeGeneratorProps) => {
     return `<!-- Crypto Coffee Button -->
 <div id="crypto-coffee-button"></div>
 <script>window.cryptoCoffeeConfig = ${configString};</script>
-<script src="https://fundhog-page.vercel.app/embed.js"></script>
+<script src="https://www.fundhog.xyz/embed.js"></script>
 <!-- End Crypto Coffee Button -->`;
   };
 

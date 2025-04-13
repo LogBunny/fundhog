@@ -31,6 +31,7 @@ export default function DonatePage() {
       //  description: "Please install MetaMask to connect your wallet",
       //  variant: "destructive",
       //});
+      toast.error("metamask not detected")
       return;
     }
 
@@ -40,11 +41,13 @@ export default function DonatePage() {
         method: "eth_requestAccounts",
       });
       setAccount(accounts[0]);
+      toast.success("wallet connected")
       //toast({
       //  title: "Wallet connected",
       //  description: `Connected to ${accounts[0].substring(0, 6)}...${accounts[0].substring(38)}`,
       //    });
     } catch (err) {
+
       console.error("User rejected connection", err);
       //   toast({
       //    title: "Connection failed",
@@ -59,6 +62,7 @@ export default function DonatePage() {
     donationAmount: string
   ) => {
     if (!window.ethereum) {
+      toast.error("wallet not connected")
       return;
     }
 
@@ -66,7 +70,7 @@ export default function DonatePage() {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      const weiAmount = Number(donationAmount) * 1e18; // Convert to wei (assuming POL has 18 decimals like ETH)
+      const weiAmount = Number(donationAmount) * 1e18; // Convert to wei (assuming ETH has 18 decimals like ETH)
       const hexWeiAmount = `0x${weiAmount.toString(16)}`;
 
       await window.ethereum.request({
@@ -106,7 +110,7 @@ export default function DonatePage() {
             <label className="text-lg font-black">Amount</label>
             <div className="flex border-4 border-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
               <span className="bg-black text-white font-bold flex items-center justify-center px-3">
-                POL
+                ETH
               </span>
               <Input
                 type="number"
@@ -133,7 +137,7 @@ export default function DonatePage() {
           <div className="bg-yellow-300 p-3 border-4 border-black font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-[1deg]">
             Sending to{" "}
             <a
-              href={`https://polygonscan.com/address/${
+              href={`https://ETHygonscan.com/address/${
                 creatorId || "0x0000000000000000000000000000000000000000"
               }`}
               target="_blank"
@@ -168,7 +172,7 @@ export default function DonatePage() {
               }}
               disabled={!amount || amount === "0" || isSubmitting || !creatorId}
             >
-              {isSubmitting ? "PROCESSING..." : `DONATE ${amount} POL`}
+              {isSubmitting ? "PROCESSING..." : `DONATE ${amount} ETH`}
             </Button>
           )}
           <p className="text-center pt-4">
