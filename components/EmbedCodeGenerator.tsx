@@ -38,6 +38,12 @@ const EmbedCodeGenerator = ({ config }: EmbedCodeGeneratorProps) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generateEmbedCode());
     setCopied(true);
+
+    window.gtag('event', "copy_clicked", {
+      event_category: "engagement",
+      event_label: "button_created",
+      value: 1,
+    });
    
     setTimeout(() => setCopied(false), 2000);
   };

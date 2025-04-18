@@ -1,5 +1,5 @@
 # FundHog
-A "buy me a coffeee button" for accepting donations in crypto without any middlemen.
+A "buy me a coffee button" for accepting donations in crypto without any middlemen.
 
 ## Check it out at:
 https://www.fundhog.xyz/
